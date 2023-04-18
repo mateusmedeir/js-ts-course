@@ -61,7 +61,7 @@ function toDoList() {
     function addSaveTasks() {
         const tasksJSON = localStorage.getItem('tasks');
         const toDoList = JSON.parse(tasksJSON);
-        for(taskText of toDoList) {
+        for(let taskText of toDoList) {
             createTask(taskText);
         }
     }
