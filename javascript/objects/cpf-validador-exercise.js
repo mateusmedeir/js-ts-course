@@ -19,19 +19,23 @@ If the number is greater than 9, consider it as 0.
 
 // /\D+/g -> everything that is not a number
 
-function cpfValidator(cpf) {
+/* function cpfValidator(cpf) {
 
     function finalDigits(cpf) {
-        const size = cpf.length + 1;
+        let multiplier = cpf.length + 2;
         const digit = cpf
-        .map((value, index) => value > 0 ? Number(value) * (size - index) : 0)
-        .reduce((accumulator, value) => accumulator + Number(value), 0);
+        .reduce((ac, value) => ac + (--multiplier * Number(value)), 0);
         return 11 - (digit % 11);
     };
 
     function pushOnCpf(cpf) {
         const digit = finalDigits(cpf);
-        cpf.push(digit > 9 ? '0' : digit.toString());
+        cpf.push(digit > 9 ? '0' : String(digit));
+    };
+
+    function isSequence(cpf) {
+        const sequence = cpf[0].repeat(cpf.length);
+        return sequence === cpf;
     };
 
     const cleanCpf = cpf.replace(/\D+/g, '');
@@ -39,6 +43,7 @@ function cpfValidator(cpf) {
 
     if (typeof cleanCpf === 'undefined') return false;
     if (cleanCpf.length !== 11) return false;
+    if (isSequence(cleanCpf)) return false;
 
     for (i = 0; i < 2; i++) pushOnCpf(cpfArray);
 
@@ -46,9 +51,9 @@ function cpfValidator(cpf) {
     return finalCpf === cleanCpf;
 }
 
-console.log(cpfValidator('705.484.450-52')); 
+console.log(cpfValidator('705.484.450-52')); */
 
-/* function CPFValidator(cpf) {
+function CPFValidator(cpf) {
     Object.defineProperty(this, 'cleanCpf', {
         get: function() {
             return cpf.replace(/\D+/g, '');
@@ -59,13 +64,32 @@ console.log(cpfValidator('705.484.450-52'));
 CPFValidator.prototype.validate = function() {
     if (typeof this.cleanCpf === 'undefined') return false;
     if (this.cleanCpf.length !== 11) return false;
-    return true;
+    if (this.isSequence()) return false;
+
+    const partialCpf = this.cleanCpf.slice(0, -2);
+    const firstDigit = this.createDigit(partialCpf);
+    const secondDigit = this.createDigit(partialCpf + firstDigit);
+
+    const newCpf = partialCpf + firstDigit + secondDigit;
+    return newCpf === this.cleanCpf;
+
 };
 
 CPFValidator.prototype.createDigit = function(cpf) {
-    const cpfArray
+    const cpfArray = Array.from(cpf);
+
+    let multiplier = cpfArray.length + 2;
+    const total = cpfArray
+    .reduce((ac, value) => ac + (--multiplier * Number(value)), 0);
+
+    const digit = 11 - (total % 11);
+    return digit > 9 ? '0' : String(digit);
 };
 
+CPFValidator.prototype.isSequence = function() {
+    const sequence = this.cleanCpf[0].repeat(this.cleanCpf.length);
+    return sequence === this.cleanCpf;
+}
+
 const cpf = new CPFValidator('705.484.450-52');
-console.log(cpf.cleanCpf);
-console.log(cpf.validate()); */
+console.log(cpf.validate());
