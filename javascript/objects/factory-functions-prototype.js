@@ -4,16 +4,23 @@ const speak = {
     },
 };
 
-eat() {
-    console.log(`${this.firstName} is eating`);
-},
-drink() {
-    console.log(`${this.firstName} is drinking`);
-},
-
-const personPrototype = {
-    
+const eat = {
+    eat() {
+        console.log(`${this.firstName} is eating`);
+    },
 };
+
+const drink = {
+    drink() {
+        console.log(`${this.firstName} is drinking`);
+    },
+};
+
+// spread
+const personPrototype = { ...speak, ...eat, ...drink };
+
+// .assign()
+//const personPrototype = Object.assign({}, speak, eat, drink);
 
 function createPerson(firstName, lastName) {
     return Object.create(personPrototype, {
