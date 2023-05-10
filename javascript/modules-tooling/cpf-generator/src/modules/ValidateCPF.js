@@ -1,4 +1,4 @@
-class ValidateCPF {
+export default class ValidateCPF {
     constructor(cpf) {
         this.cpf = cpf;
         this.cleanCpf = this.cpf.replace(/\D+/g, '');
