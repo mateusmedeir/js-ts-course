@@ -1,4 +1,11 @@
-const Dog = require('./B/C/D/mod');
+/* const path = require('path');
 
-const dog = new Dog('Dog');
-dog.bark();
+// console.log(__filename);
+// console.log(__dirname);
+
+console.log(path.resolve(__dirname, '..', '..')); */
+
+const Dog = require('./Z/mod2');
+
+const c1 = new Dog('Dog');
+c1.bark();
