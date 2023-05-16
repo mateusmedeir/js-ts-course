@@ -4,27 +4,23 @@ const path = require('path');
 async function readdir(rootDir) {
     rootDir = rootDir || path.resolve(__dirname);
     const files = await fs.readdir(rootDir);
-    console.log(files);
-    walk(files, rootDir);
+    await walk(files, rootDir);
 }
 
-async function walk(files, rootDir, amountHyp=0) {
+async function walk(files, rootDir) {
     for(let file of files) {
         const fileFullPath = path.resolve(rootDir, file);
+
+        if (/\.git/g.test(fileFullPath)) continue;
+        if (/node_modules/g.test(fileFullPath)) continue;
+        
         const stats = await fs.stat(fileFullPath);
-        const hyphens = putHyphens(amountHyp);
-        console.log(`${hyphens}${file}`);
+        if (/\.html$/g.test(fileFullPath))
+            console.log(fileFullPath);
         if (stats.isDirectory()) {
-            const filesInFolder = await fs.readdir(fileFullPath);
-            walk(filesInFolder, fileFullPath, amountHyp + 1);
+            await readdir(fileFullPath);
         }
     }
 }
 
-function putHyphens(amountHyp) {
-    let hyphens = '';
-    for (let i = 0; i < amountHyp; i++) hyphens += '-';
-    return hyphens;
-}
-
-readdir('c:\\Users\\Mateus\\Documents\\js-ts-course\\node\\essential\\');
+readdir('c:\\Users\\Mateus\\Documents\\js-ts-course', 0);
