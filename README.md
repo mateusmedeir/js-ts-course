@@ -23,8 +23,5 @@ Name | Description
 Name | Description
 ---- | -----------
 [Essential](/node/essential) | Node basics: modules, NPM and others
-<<<<<<< HEAD
 [Express](/node/express) | 
-=======
 [Express](/node/express) | 
->>>>>>> 12d371327e56c702a2675df1c5dc4169af8a705d
