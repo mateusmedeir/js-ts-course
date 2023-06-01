@@ -1,0 +1,3 @@
+[submodule "nodejs/project"]
+	path = nodejs/project
+	url = https://github.com/mateusmedeir/contact-book-node
